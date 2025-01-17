@@ -1,0 +1,48 @@
+.Main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.Main > * {
+    margin: 30px;
+    border: 2px solid black;
+}
+
+.Logo {
+    align-self: center;
+}
+
+.SearchTile {
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.SearchTile button {
+    width: 50%;
+    align-self: center;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.SearchTile button:hover {
+    background-color: darkgreen;
+}
+
+@media (max-width: 1200px) {
+    .SearchTile {
+        width: 50%;
+    }
+}
+
+.WeatherTile {
+
+}
