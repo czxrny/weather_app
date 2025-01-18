@@ -13,10 +13,12 @@ export default class WeatherFetcher {
         }
         try {
             this.weatherInfo = await this.fetchWeather(this.latitude, this.longitude);
-            console.log(this.weatherInfo);
         } catch (error) {
             console.error(`An error has occurred: ${error.message}`)
+            return;
         }
+        this.timeStamp = new Date().toLocaleTimeString().substring(0, 5);
+        console.log(`Weather report for the ${localization} localization was created.\nTimestamp: ${this.timeStamp}`)
     }
 
     async fetchLocalizationInfo(localization) {

@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import WeatherFetcher from "./components/WeatherFetcher";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 let currentCords = null;
@@ -16,28 +17,7 @@ const formatter = new Intl.DateTimeFormat("pl-PL", {
 function App() {
     const [ localization, setLocalization]  = useState("");
     const [ searchInfo, setSearchInfo ] = useState("");
-
-
-    async function fetchCoordinates(localization) {
-        if (!localization) {
-            console.error("Localization is empty!");
-            return;
-        }
-
-        try {
-            const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${localization}&key=${apiKey}`);
-            if (!response.ok) {
-                throw new Error(`Blad API: ${response.status}`);
-            }
-            setSearchInfo("")
-
-            return await response.json();
-        } catch (error) {
-            console.error(`Wystapil blad: ${error.message}`)
-            setSearchInfo("Could not find any matching location.");
-            return null;
-        }
-    }
+    let weatherFetcher = new WeatherFetcher();
 
     return (
         <div className={"Main"}>
@@ -53,11 +33,11 @@ function App() {
                     placeholder="Wpisz wybrane miasto :)"
                 />
                 <button onClick={() => {
-                    async function getCords() {
-                        return await fetchCoordinates(localization);
+                    async function getWeather() {
+                        await weatherFetcher.getWeather(localization);
+                        console.log(weatherFetcher.weatherInfo);
                     }
-                    currentCords = getCords();
-                    console.log(currentCords)
+                    getWeather();
                 }
                 }>SPRAWDZ POGODE!</button>
             </div>
