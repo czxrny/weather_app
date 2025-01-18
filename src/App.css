@@ -6,20 +6,34 @@
 
 .Main > * {
     margin: 30px;
-    border: 2px solid black;
+    border: none;
+    border-radius: 5px;
 }
 
 .Logo {
     align-self: center;
 }
 
+.AppBody {
+    align-self: center;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .SearchTile {
+    height: 100px;
+    width: 20vw;
     flex-wrap: wrap;
     display: flex;
     flex-direction: column;
+    margin-inline: 10px;
+    margin-bottom: 20px;
     padding: 20px;
     color: #dadcc6;
     background-color: #666361;
+    border: none;
+    border-radius: 10px;
 }
 
 .SearchTile input {
@@ -61,7 +75,14 @@
     }
 }
 
+.WeatherTilesContainer {
+    width: 500px;
+}
+
 .WeatherTile {
+    height: 400px;
+    width: 60vw;
+    margin-left: 20px;
     padding-top: 30px;
     padding-bottom: 30px;
     padding-inline: 10px;

@@ -27,6 +27,7 @@ function App() {
                 <img className={"logo"} src="./components/weather_tile/weather_images/image.png" alt="logo"></img>
             </div>
 
+            <div className={"AppBody"}>
             <div className="SearchTile">
                 <input
                     className={"SearchField"}
@@ -56,11 +57,13 @@ function App() {
                 }
                 }>SPRAWDZ POGODE!</button>
             </div>
-
-            <div className={"WeatherTile"}>
-                <p className={"Localization"}>{currentLocalization}</p>
-                <p className={"DateMessage"}>{dateMessage}</p>
-                <p className={"WeatherInfo"}></p>
+            <div className={"WeatherTilesContainer"}>
+                <div className={"WeatherTile"}>
+                    <p className={"Localization"}>{currentLocalization}</p>
+                    <p className={"DateMessage"}>{dateMessage}</p>
+                    <p className={"WeatherInfo"}></p>
+                </div>
+            </div>
             </div>
         </div>
     )
