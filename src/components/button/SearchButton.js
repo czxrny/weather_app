@@ -4,25 +4,21 @@ import React from "react";
 import WeatherFetcher from "../WeatherFetcher";
 
 class WeatherForTheDay {
-    constructor(day, hour = 0, hourlyTempArray, hourlyWindSpeedArray, hourlyWindDirectionArray) {
+    constructor(day, hour = 0, datesArray, hourlyTempArray, hourlyWindSpeedArray, hourlyWindDirectionArray) {
         this.day = day * 24;
+        this.date = datesArray[day * 24];
         this.hourlyTempArray = hourlyTempArray.slice(this.day + hour, this.day + 24);
         this.hourlyWindSpeedArray = hourlyWindSpeedArray.slice(this.day + hour, this.day + 24)
         this.hourlyWindDirectionArray = hourlyWindDirectionArray.slice(this.day + hour, this.day + 24)
-
     }
 
-    findFastestAndLowestWindSpeed() {
-        let min = Number.MAX_VALUE;
-        let max = Number.MIN_VALUE;
+    findTheAvgWindSpeed() {
+        let avgWindSpeed = 0;
 
         for(let val in this.hourlyWindSpeedArray) {
-            if(val < min)
-                min = val;
-            if(val > max)
-                max = val;
+            avgWindSpeed += val;
 
-            return { min, max };
+            return avgWindSpeed;
         }
     }
 
@@ -64,14 +60,17 @@ function SearchButton(props) {
 
         async function setWeatherAndMessage() {
             const weatherData = await getWeatherInfo();
+            const days = []
             if (weatherData) {
                 props.setWeather(weatherData);
-                console.log(new WeatherForTheDay(0, new Date().getHours(), weatherData.hourly.temperature_2m.slice(),
+                days.push(new WeatherForTheDay(0, new Date().getHours(), weatherData.hourly.time.slice(), weatherData.hourly.temperature_2m.slice(),
                     weatherData.hourly.wind_speed_10m.slice(), weatherData.hourly.wind_direction_10m.slice()));
-                for(let i = 0; i<7; i++) {
-                    console.log(new WeatherForTheDay(i, 0, weatherData.hourly.temperature_2m.slice(),
+
+                for(let i = 1; i<7; i++) {
+                    days.push(new WeatherForTheDay(i, 0, weatherData.hourly.time.slice(), weatherData.hourly.temperature_2m.slice(),
                         weatherData.hourly.wind_speed_10m.slice(), weatherData.hourly.wind_direction_10m.slice()));
                 }
+                props.setNextWeekForecast(days.slice());
 
                 props.setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.timeStamp)}`);
                 props.setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
@@ -79,6 +78,7 @@ function SearchButton(props) {
                 props.setCurrentLocalization("");
                 props.setDateMessage("Nie można było znaleźć prognozy w wybranej lokalizacji.");
             }
+
         }
 
         setWeatherAndMessage();
