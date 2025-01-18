@@ -3,20 +3,22 @@ import React, { useEffect, useState } from "react";
 import WeatherFetcher from "./components/WeatherFetcher";
 
 const apiKey = process.env.REACT_APP_API_KEY;
-let currentCords = null;
 
 const formatter = new Intl.DateTimeFormat("pl-PL", {
-    weekday: "long",           // Dzień tygodnia
-    year: "numeric",           // Rok
-    month: "long",             // Miesiąc
-    day: "numeric",            // Dzień
-    hour: "2-digit",           // Godzina
-    minute: "2-digit",         // Minuty
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
 })
 
 function App() {
     const [ localization, setLocalization]  = useState("");
-    const [ searchInfo, setSearchInfo ] = useState("");
+    const [ weather, setWeather ] = useState(null);
+    const [ currentLocalization, setCurrentLocalization ] = useState("");
+    const [ dateMessage, setDateMessage ] = useState(" ");
+
     let weatherFetcher = new WeatherFetcher();
 
     return (
@@ -33,17 +35,31 @@ function App() {
                     placeholder="Wpisz wybrane miasto :)"
                 />
                 <button onClick={() => {
-                    async function getWeather() {
+                    async function getWeatherInfo() {
                         await weatherFetcher.getWeather(localization);
                         console.log(weatherFetcher.weatherInfo);
+                        return weatherFetcher.weatherInfo;
                     }
-                    getWeather();
+                    async function setWeatherAndMessage() {
+                        const weatherData = await getWeatherInfo();
+                        if(weatherData) {
+                            setWeather(weatherData);
+                            setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.timeStamp)}`);
+                            setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
+                        }
+                        else {
+                            setCurrentLocalization("");
+                            setDateMessage("Nie można było znaleźć prognozy w wybranej lokalizacji.");
+                        }
+                    }
+                    setWeatherAndMessage();
                 }
                 }>SPRAWDZ POGODE!</button>
             </div>
 
             <div className={"WeatherTile"}>
-                {searchInfo}
+                <p>{currentLocalization}</p>
+                <p>{dateMessage}</p>
             </div>
         </div>
     )
