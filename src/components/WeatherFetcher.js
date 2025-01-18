@@ -1,13 +1,14 @@
 export default class WeatherFetcher {
     constructor() {
         this.apiKey = process.env.REACT_APP_API_KEY;
-        this.fetchWeatherParams = 'hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m'
+        this.fetchWeatherParams = '&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min'
     }
 
     async getWeather(localization) {
         try {
             this.localizationInfo = await this.fetchLocalizationInfo(localization);
             this.updateLocalizationInfo();
+            console.log(this.timeZone);
         } catch (error) {
             console.error(`An error has occurred: ${error.message}`);
             return;

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import WeatherFetcher from "./components/WeatherFetcher";
+import SearchButton from "./components/button/SearchButton";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -13,13 +13,21 @@ const formatter = new Intl.DateTimeFormat("pl-PL", {
     minute: "2-digit",
 })
 
+class WeatherForTheDay {
+    constructor(day, hour = 0, hourlyTempArray, hourlyWindSpeedArray, hourlyWindDirectionArray) {
+        this.day = day * 24;
+        this.hourlyTempArray = hourlyTempArray.slice(this.day + hour, this.day + 24);
+        this.hourlyWindSpeedArray = hourlyWindSpeedArray.slice(this.day + hour, this.day + 24)
+        this.hourlyWindDirectionArray = hourlyWindDirectionArray.slice(this.day + hour, this.day + 24)
+    }
+
+}
+
 function App() {
     const [ localization, setLocalization]  = useState("");
     const [ weather, setWeather ] = useState(null);
     const [ currentLocalization, setCurrentLocalization ] = useState("");
     const [ dateMessage, setDateMessage ] = useState(" ");
-
-    let weatherFetcher = new WeatherFetcher();
 
     return (
         <div className={"Main"}>
@@ -35,33 +43,18 @@ function App() {
                     onChange={(event) => setLocalization(event.target.value)}
                     placeholder="Wpisz wybrane miasto :)"
                 />
-                <button onClick={() => {
-                    async function getWeatherInfo() {
-                        await weatherFetcher.getWeather(localization);
-                        console.log(weatherFetcher.weatherInfo);
-                        return weatherFetcher.weatherInfo;
-                    }
-                    async function setWeatherAndMessage() {
-                        const weatherData = await getWeatherInfo();
-                        if(weatherData) {
-                            setWeather(weatherData);
-                            setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.timeStamp)}`);
-                            setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
-                        }
-                        else {
-                            setCurrentLocalization("");
-                            setDateMessage("Nie można było znaleźć prognozy w wybranej lokalizacji.");
-                        }
-                    }
-                    setWeatherAndMessage();
-                }
-                }>SPRAWDZ POGODE!</button>
+                <SearchButton localization={localization}
+                              setWeather={setWeather} setDateMessage={setDateMessage}
+                              setCurrentLocalization={setCurrentLocalization} formatter={formatter}
+                />
             </div>
             <div className={"WeatherTilesContainer"}>
-                <div className={"WeatherTile"}>
+                <div className={"TodaysWeatherTile"}>
                     <p className={"Localization"}>{currentLocalization}</p>
                     <p className={"DateMessage"}>{dateMessage}</p>
-                    <p className={"WeatherInfo"}></p>
+                    <div className={"WeatherInfo"}>
+
+                    </div>
                 </div>
             </div>
             </div>

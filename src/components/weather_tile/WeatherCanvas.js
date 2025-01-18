@@ -1,9 +1,9 @@
 import "./WeatherCanvas.css"
 
-function WeatherCanvas() {
+function WeatherCanvas(props) {
     return (
     <div>
-
+        {props.}
     </div>
     )
 }
