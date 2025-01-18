@@ -1,6 +1,7 @@
 export default class WeatherFetcher {
     constructor() {
         this.apiKey = process.env.REACT_APP_API_KEY;
+        this.fetchWeatherParams = 'hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m'
     }
 
     async getWeather(localization) {
@@ -40,7 +41,7 @@ export default class WeatherFetcher {
     }
 
     async fetchWeather(latitude, longitude) {
-        let response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+        let response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&${this.fetchWeatherParams}`);
         return await response.json();
     }
 };
