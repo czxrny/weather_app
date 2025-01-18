@@ -18,23 +18,41 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    color: #dadcc6;
+    background-color: #666361;
 }
+
+.SearchTile input {
+    font-size: 10px;
+    font-weight: lighter;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color: #dadcc6;
+    background-color: #3e3e3e;
+    border: none;
+    border-radius: 5px;
+}
+
+.SearchTile input::placeholder {
+     color: #dadcc6;
+ }
 
 .SearchTile button {
     width: 50%;
     align-self: center;
     margin-top: 10px;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
+    font-size: 10px;
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #4a4a4a;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .SearchTile button:hover {
-    background-color: darkgreen;
+    background-color: #3c3c3c;
 }
 
 @media (max-width: 1200px) {
@@ -47,4 +65,14 @@
     padding-top: 30px;
     padding-bottom: 30px;
     padding-inline: 10px;
+    background-color: #666361;
+}
+
+.Localization {
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.DateMessage {
+    font-size: small;
 }

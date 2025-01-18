@@ -58,8 +58,9 @@ function App() {
             </div>
 
             <div className={"WeatherTile"}>
-                <p>{currentLocalization}</p>
-                <p>{dateMessage}</p>
+                <p className={"Localization"}>{currentLocalization}</p>
+                <p className={"DateMessage"}>{dateMessage}</p>
+                <p className={"WeatherInfo"}></p>
             </div>
         </div>
     )
