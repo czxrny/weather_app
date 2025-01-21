@@ -15,7 +15,6 @@ function SearchButton(props) {
         async function getWeatherInfo() {
             await weatherFetcher.getWeather(props.localization);
             formatter = createFormatter(weatherFetcher.timeZone);
-            console.log(weatherFetcher.weatherInfo);
             return weatherFetcher.weatherInfo;
         }
 
@@ -27,7 +26,7 @@ function SearchButton(props) {
 
                 props.setNextWeekForecast(forecastCreator.getForecast());
                 props.setUnits(forecastCreator.getUnits());
-                props.setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.timeStamp)}`);
+                props.setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.localTime)}`);
                 props.setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
             } else {
                 props.setCurrentLocalization("");

@@ -1,3 +1,6 @@
+import "./Formatter"
+import { createFormatter } from "./Formatter";
+
 export class WeatherFetcher {
     constructor() {
         this.apiKey = process.env.REACT_APP_API_KEY;
@@ -5,23 +8,28 @@ export class WeatherFetcher {
     }
 
     async getWeather(localization) {
+        this.timeStamp = new Date();
         try {
             this.localizationInfo = await this.fetchLocalizationInfo(localization);
             this.updateLocalizationInfo();
-            console.log(this.timeZone);
         } catch (error) {
             console.error(`An error has occurred: ${error.message}`);
             return;
         }
+
+        const formatter = createFormatter(this.timeZone);
+
         try {
-            this.weatherInfo = await this.fetchWeather(this.latitude, this.longitude);
+            let response = await this.fetchWeather(this.latitude, this.longitude);
+            response.localTime = formatter.format(this.timeStamp);
+            this.weatherInfo = response;
         } catch (error) {
             console.error(`An error has occurred: ${error.message}`)
             return;
         }
-        this.timeStamp = new Date();
         this.localization = localization;
         console.log(`Weather report for the ${localization} localization was created.\nTimestamp: ${this.timeStamp.toLocaleTimeString().substring(0, 5)}.`)
+        console.log(this.weatherInfo);
     }
 
     async fetchLocalizationInfo(localization) {

@@ -1,5 +1,5 @@
 function WeatherTile(props) {
-return (
+    return (
         <div className={"WeatherInfo"}>
             <p>{props.forecast.date}</p>
             <p className={"Temperature"}>
@@ -9,22 +9,21 @@ return (
                     <p>
                         Temperatura rn: {props.forecast.hourlyTemperature[0]} {props.units.temperature}
                     </p>
-                    <p> Prognoza na następne godziny: </p>
-                    <p>
-                        Temperatura: {props.forecast.hourlyTemperature.slice(1).map((temp, index) => (
-                        <span key={index}>{temp} {props.units.temperature}</span>
-                    ))}
-                    </p>
-                    <p>
-                        Prędkości wiatru: {props.forecast.hourlyWindSpeed.slice(1).map((speed, index) => (
-                        <span key={index}>{speed} {props.units.windSpeed}</span>
-                    ))}
-                    </p>
-                    <p>
-                        Wilgotność powietrza: {props.forecast.hourlyHumidity.slice(1).map((humidity, index) => (
-                        <span key={index}>{humidity} {props.units.humidity}</span>
-                    ))}
-                    </p>
+                    {props.currentHour < 23 && (
+                        <>
+                            <p> Prognoza na następne godziny: </p>
+                            <div>
+                                {props.forecast.hourlyTemperature.slice(1).map((temp, index) => (
+                                    <div key={index} className="HourlyForecast">
+                                        <p>Godzina: {props.forecast.timeArr[index + 1]}</p>
+                                        <p>Temperatura: {temp} {props.units.temperature}</p>
+                                        <p>Prędkość wiatru: {props.forecast.hourlyWindSpeed[index + 1]} {props.units.windSpeed}</p>
+                                        <p>Wilgotność powietrza: {props.forecast.hourlyHumidity[index + 1]} {props.units.humidity}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </>
             ) : (
                 <>
@@ -36,7 +35,6 @@ return (
             )}
             <p>tu bedzie sie znajdowac ikona dla pogody, w zaleznosci od temperatury ktora zostanie sczytana</p>
         </div>
-    );
+    );    
 }
-
-export default WeatherTile;
+export default WeatherTile;    
