@@ -26,6 +26,7 @@ function SearchButton(props) {
                 const forecastCreator = new ForecastCreator(weatherData);
 
                 props.setNextWeekForecast(forecastCreator.getForecast());
+                props.setUnits(forecastCreator.getUnits());
                 props.setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.timeStamp)}`);
                 props.setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
             } else {

@@ -9,6 +9,7 @@ function App() {
     const [currentLocalization, setCurrentLocalization] = useState("");
     const [dateMessage, setDateMessage] = useState(" ");
     const [nextWeekForecast, setNextWeekForecast] = useState(null)
+    const [units, setUnits] = useState(null);
 
     return (
         <div className={"Main"}>
@@ -16,7 +17,7 @@ function App() {
                 <img className={"logo"} src="./components/weather_tile/weather_images/image.png" alt="logo"/>
             </div>
 
-            <div className={"AppBody"}>
+            <div className={"AppBody"}>     
                 <div className="SearchTile">
                     <input
                         className={"SearchField"}
@@ -29,6 +30,7 @@ function App() {
                         setDateMessage={setDateMessage}
                         setCurrentLocalization={setCurrentLocalization}
                         setNextWeekForecast={setNextWeekForecast}
+                        setUnits={setUnits}
                     />
                 </div>
                 <div className={"WeatherTilesContainer"}>
@@ -40,7 +42,7 @@ function App() {
                                 <div className="weather-tiles-container">
                                     {nextWeekForecast.map((forecast, i) => (
                                         <div key={i} className="WeatherInfo">
-                                            <WeatherTile forecast={forecast} units={"*C"}/>
+                                            <WeatherTile forecast={forecast} units={units}/>
                                         </div>
                                     ))}
                                 </div>

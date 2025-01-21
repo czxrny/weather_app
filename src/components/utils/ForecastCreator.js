@@ -2,6 +2,10 @@ export class ForecastCreator {
     // tworzy liste obiektow z informacjami o 7 dniach pogody
     constructor(info) {
         this.info = info;
+        this.units = {  temperature: info.hourly_units.temperature_2m,
+                        windSpeed: info.hourly_units.wind_speed_10m,
+                        humidity: info.hourly_units.relative_humidity_2m};
+        this.windSpeedUnits = info.hourly_units.wind_speed_10m;
         this.forecast = [];
 
         this.forecast.push(this.getDayForecast(0, new Date().getHours()));
@@ -76,5 +80,9 @@ export class ForecastCreator {
      */
     getForecast() {
         return this.forecast;
+    }
+
+    getUnits() {
+        return this.units;
     }
 }
