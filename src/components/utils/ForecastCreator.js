@@ -8,7 +8,7 @@ export class ForecastCreator {
         this.windSpeedUnits = info.hourly_units.wind_speed_10m;
         this.forecast = [];
 
-        this.forecast.push(this.getDayForecast(0, new Date().getHours()));
+        this.forecast.push(this.getDayForecast(0, Number(this.info.localTime.substring(0,2))));
 
         for (let i = 1; i < 7; i++) {
             this.forecast.push(this.getDayForecast(i));
@@ -26,11 +26,12 @@ export class ForecastCreator {
         let timeArr = [];
 
         for(let i = 0; i < 24 - hour; i++){
-            timeArr.push(this.info.hourly.time[objDay + i]);
+            timeArr.push(this.info.hourly.time[objDay + hour + i]);
         }
 
         return {
                 day: objDay,
+                currentHour: hour,
                 date: this.info.hourly.time[objDay].slice(0, 10),
                 timeArr: timeArr,
                 maxTemperature: this.info.daily.temperature_2m_max[day],

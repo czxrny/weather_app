@@ -26,7 +26,7 @@ function SearchButton(props) {
 
                 props.setNextWeekForecast(forecastCreator.getForecast());
                 props.setUnits(forecastCreator.getUnits());
-                props.setDateMessage(`Prognoza pogody na dzień: ${formatter.format(weatherFetcher.localTime)}`);
+                props.setDateMessage(`Raport pogodowy został wygenerowany o godzinie ${formatter.format(weatherFetcher.localTime)}.`);
                 props.setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
             } else {
                 props.setCurrentLocalization("");

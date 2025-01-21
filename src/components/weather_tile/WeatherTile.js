@@ -9,13 +9,13 @@ function WeatherTile(props) {
                     <p>
                         Temperatura rn: {props.forecast.hourlyTemperature[0]} {props.units.temperature}
                     </p>
-                    {props.currentHour < 23 && (
+                    {props.forecast.currentHour < 23 && (
                         <>
                             <p> Prognoza na następne godziny: </p>
                             <div>
                                 {props.forecast.hourlyTemperature.slice(1).map((temp, index) => (
                                     <div key={index} className="HourlyForecast">
-                                        <p>Godzina: {props.forecast.timeArr[index + 1]}</p>
+                                        <p>Godzina: {props.forecast.timeArr[index + 1].slice(11, 16)}</p>
                                         <p>Temperatura: {temp} {props.units.temperature}</p>
                                         <p>Prędkość wiatru: {props.forecast.hourlyWindSpeed[index + 1]} {props.units.windSpeed}</p>
                                         <p>Wilgotność powietrza: {props.forecast.hourlyHumidity[index + 1]} {props.units.humidity}</p>
