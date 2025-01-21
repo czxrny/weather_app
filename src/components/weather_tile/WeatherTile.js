@@ -8,6 +8,8 @@ function WeatherTile(props) {
                 <>
                     <p>
                         Temperatura rn: {props.forecast.hourlyTemperature[0]} {props.units}
+                    </p>
+                    <p>
                         Temperatura w następnych godzinach: {props.forecast.hourlyTemperature.slice(1).map((temp, index) => (
                         <span key={index}>{temp}{props.units} </span>
                     ))}
@@ -22,7 +24,7 @@ function WeatherTile(props) {
                 <>
                     <p>Temperatura minimalna: {props.forecast.minTemperature}</p>
                     <p>Temperatura maksymalna: {props.forecast.maxTemperature}</p>
-                    <p>Srednia predkosc wiatru: {props.forecast.averageWindSpeed}</p>
+                    <p>Srednia predkosc wiatru: {props.forecast.averageWindSpeed} km/h</p>
                     <p>Przewazajacy kierunek wiatru: {props.forecast.averageWindDireciton}</p>
                 </>
             )}

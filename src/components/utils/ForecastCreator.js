@@ -29,14 +29,14 @@ export class ForecastCreator {
                 day: objDay,
                 date: this.info.hourly.time[objDay].slice(0, 10),
                 timeArr: timeArr,
-                maxTemperature: this.info.daily.temperature_2m_max[objDay],
-                minTemperature: this.info.daily.temperature_2m_min[objDay],
+                maxTemperature: this.info.daily.temperature_2m_max[day],
+                minTemperature: this.info.daily.temperature_2m_min[day],
                 hourlyTemperature: this.info.hourly.temperature_2m.slice(objDay + hour, objDay + 24),
                 hourlyHumidity: this.info.hourly.relative_humidity_2m.slice(objDay + hour, objDay + 24),
                 hourlyWindSpeed: this.info.hourly.wind_speed_10m.slice(objDay + hour, objDay + 24),
                 hourlyWindDirection: this.info.hourly.wind_direction_10m.slice(objDay + hour, objDay + 24),
-                averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice()).toPrecision(2),
-                averageWindDireciton: this.findTheAvgForTheDay(this.info.hourly.wind_direction_10m.slice())
+                averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice(objDay, objDay + 24)),
+                averageWindDireciton: this.findTheAvgWindDirection(this.info.hourly.wind_direction_10m.slice(objDay, objDay + 24))
         };
     }
 
@@ -46,8 +46,28 @@ export class ForecastCreator {
         for (let val of arr) {
             result += val;
         }
+        result /= arr.length;
+        return result.toPrecision(3);
+    }
 
-        return result / arr.length;
+    findTheAvgWindDirection(arr) {
+        const avg = this.findTheAvgForTheDay(arr);
+        const directions = [
+            { range: [337.5, 360], direction: "Północ" },
+            { range: [0, 22.5], direction: "Północ" },
+            { range: [22.5, 67.5], direction: "Północny Wschód" },
+            { range: [67.5, 112.5], direction: "Wschód" },
+            { range: [112.5, 157.5], direction: "Południowy Wschód" },
+            { range: [157.5, 202.5], direction: "Południe" },
+            { range: [202.5, 247.5], direction: "Południowy Zachód" },
+            { range: [247.5, 292.5], direction: "Zachód" },
+            { range: [292.5, 337.5], direction: "Północny Zachód" }
+        ];
+
+        for(const { range, direction } of directions) {
+            if(avg >= range[0] && avg < range[1])
+                return direction;
+        }
     }
 
     /**
