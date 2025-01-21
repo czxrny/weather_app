@@ -29,8 +29,9 @@ function SearchButton(props) {
                 props.setDateMessage(`Raport pogodowy został wygenerowany o godzinie ${formatter.format(weatherFetcher.localTime)}.`);
                 props.setCurrentLocalization(`${weatherFetcher.localization.charAt(0).toUpperCase() + weatherFetcher.localization.toLowerCase().slice(1)}`);
             } else {
-                props.setCurrentLocalization("");
+                props.setNextWeekForecast(null);
                 props.setDateMessage("Nie można było znaleźć prognozy w wybranej lokalizacji.");
+                props.setCurrentLocalization("");       
             }
 
         }
