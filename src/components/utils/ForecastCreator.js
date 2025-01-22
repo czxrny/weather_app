@@ -23,11 +23,13 @@ export class ForecastCreator {
      */
     getDayForecast(day, hour = 0) {
         const dayIndex = day * 24;
-        const numberOfForecastHours = 24;
+        // after 17th hour start to add more hours after midnight to display
+        const numberOfForecastHours = (hour > 17) ? 24  + hour - 17 : 24;
+
         let timeArr = [];
 
-        for(let i = 0; i < 24 - hour; i++){
-            timeArr.push(this.info.hourly.time[dayIndex + hour + i].slice(11, 16));
+        for(let i = dayIndex + hour; i < dayIndex + numberOfForecastHours; i++){
+            timeArr.push(this.info.hourly.time[i].slice(11, 16));
         }
 
         return {
@@ -53,7 +55,8 @@ export class ForecastCreator {
             result += val;
         }
         result /= arr.length;
-        return result.toPrecision(3);
+
+        return result.toFixed(1);
     }
 
     findTheAvgWindDirection(arr) {
