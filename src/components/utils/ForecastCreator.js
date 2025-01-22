@@ -22,26 +22,27 @@ export class ForecastCreator {
      * @returns {object} - Obiekt z prognozą dla danego dnia.
      */
     getDayForecast(day, hour = 0) {
-        const objDay = day * 24;
+        const dayIndex = day * 24;
+        const numberOfForecastHours = 24;
         let timeArr = [];
 
         for(let i = 0; i < 24 - hour; i++){
-            timeArr.push(this.info.hourly.time[objDay + hour + i]);
+            timeArr.push(this.info.hourly.time[dayIndex + hour + i].slice(11, 16));
         }
 
         return {
-                day: objDay,
+                day: dayIndex,
                 currentHour: hour,
-                date: this.info.hourly.time[objDay].slice(0, 10),
+                date: this.info.hourly.time[dayIndex].slice(0, 10),
                 timeArr: timeArr,
                 maxTemperature: this.info.daily.temperature_2m_max[day],
                 minTemperature: this.info.daily.temperature_2m_min[day],
-                hourlyTemperature: this.info.hourly.temperature_2m.slice(objDay + hour, objDay + 24),
-                hourlyHumidity: this.info.hourly.relative_humidity_2m.slice(objDay + hour, objDay + 24),
-                hourlyWindSpeed: this.info.hourly.wind_speed_10m.slice(objDay + hour, objDay + 24),
-                hourlyWindDirection: this.info.hourly.wind_direction_10m.slice(objDay + hour, objDay + 24),
-                averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice(objDay, objDay + 24)),
-                averageWindDireciton: this.findTheAvgWindDirection(this.info.hourly.wind_direction_10m.slice(objDay, objDay + 24))
+                hourlyTemperature: this.info.hourly.temperature_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+                hourlyHumidity: this.info.hourly.relative_humidity_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+                hourlyWindSpeed: this.info.hourly.wind_speed_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+                hourlyWindDirection: this.info.hourly.wind_direction_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+                averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice(dayIndex, dayIndex + numberOfForecastHours)),
+                averageWindDireciton: this.findTheAvgWindDirection(this.info.hourly.wind_direction_10m.slice(dayIndex, dayIndex + numberOfForecastHours))
         };
     }
 

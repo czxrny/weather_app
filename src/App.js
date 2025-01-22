@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import SearchButton from "./components/button/SearchButton";
 import "./components/weather_tile/WeatherTile"
 import WeatherTile from "./components/weather_tile/WeatherTile";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 
 function App() {
     const [localization, setLocalization] = useState("");
@@ -14,7 +15,7 @@ function App() {
     return (
         <div className={"Main"}>
             <div className={"LogoContainer"}>
-                <img className={"logo"} src="./components/weather_tile/weather_images/image.png" alt="logo"/>
+                <img className={"logo"} src="./image.png" alt="logo"/>
             </div>
 
             <div className={"AppBody"}>     
