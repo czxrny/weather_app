@@ -1,15 +1,13 @@
-.SearchTile button {
-    width: 50%;
-    align-self: center;
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 10px;
+button {
+    display: inline-block;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     font-weight: bolder;
     font-family: 'Courier New', Courier, monospace;
     background-color: #4a4a4a;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 .SearchTile button:hover {

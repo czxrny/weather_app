@@ -12,45 +12,40 @@ function App() {
     const [units, setUnits] = useState(null);
 
     return (
-        <div className={"Main"}>
-            <img className={"logo"} src="./image.png" alt="logo"/>
+    <div className="Main">
+    <img className="logo" src="./image.png" alt="logo" />
 
-            <div className={"AppBody"}>     
-                <div className="SearchTile">
-                    <input
-                        className={"SearchField"}
-                        type={"text"}
-                        onChange={(event) => setLocalization(event.target.value)}
-                        placeholder="Wpisz wybrane miasto :)"
-                    />
-                    <SearchButton
-                        localization={localization}
-                        setDateMessage={setDateMessage}
-                        setCurrentLocalization={setCurrentLocalization}
-                        setNextWeekForecast={setNextWeekForecast}
-                        setUnits={setUnits}
-                    />
-                </div>
-                <div className={"WeatherTilesContainer"}>
-                    <div className={"TodaysWeatherTile"}>
-                        <h>{currentLocalization}</h>
-                        <p className={"DateMessage"}>{dateMessage}</p>
-                        <div className={"test"}>
-                            {nextWeekForecast ? (
-                                <div className="weather-tiles-container">
-                                    {nextWeekForecast.map((forecast, i) => (
-                                        <div key={i} className="WeatherInfo">
-                                            <WeatherTile forecast={forecast} units={units}/>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : null}
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div className="AppBody">
+        <div className="SearchTile">
+            <input
+                className="SearchField"
+                type="text"
+                onChange={(event) => setLocalization(event.target.value)}
+                placeholder="Wpisz wybrane miasto :)"
+            />
+            <SearchButton
+                localization={localization}
+                setDateMessage={setDateMessage}
+                setCurrentLocalization={setCurrentLocalization}
+                setNextWeekForecast={setNextWeekForecast}
+                setUnits={setUnits}
+            />
         </div>
-    );
+
+        <div className="TodaysWeatherTile">
+            <h1>{currentLocalization}</h1>
+            <p className="DateMessage">{dateMessage}</p>
+            {nextWeekForecast && (
+                <div className="weather-tiles-container">
+                    {nextWeekForecast.map((forecast, i) => (
+                        <WeatherTile key={i} forecast={forecast} units={units} />
+                    ))}
+                </div>
+            )}
+        </div>
+    </div>
+</div>
+);
 }
 
 export default App;

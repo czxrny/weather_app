@@ -1,69 +1,128 @@
-.Main {
-    padding: 50px;
-}
+/* App.css */
 
-h {
-    font-size: 35px;
-    font-weight: bolder;
-}
-
-.Logo {
-    align-self: center;
-}
-
-.AppBody {
-    align-self: center;
-    width: 90%;
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #1e1e1e;
+    color: #c9d1d9;
     display: flex;
-    flex-wrap: wrap;
-}
-
-.SearchTile {
-    height: 100px;
-    width: 20vw;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .Main {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px;
+    background: #2d2d2d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .logo {
+    width: 150px;
+    display: block;
+    margin: 20px auto 10px;
+  }
+  
+  .AppBody {
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    margin-inline: 10px;
-    margin-bottom: 20px;
-    padding: 20px;
-    color: #dadcc6;
-    background-color: #666361;
-    border: none;
-    border-radius: 10px;
-}
-
-.SearchTile input {
-    font-size: 10px;
-    font-weight: lighter;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-    color: #dadcc6;
-    background-color: #3e3e3e;
+    gap: 20px;
+  }
+  
+  .SearchTile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .SearchField {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #2d2d2d;
+    color: #c9d1d9;
+  }
+  
+  button {
+    background-color: #6e7681;
+    color: #c9d1d9;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-}
-
-.SearchTile input::placeholder {
-     color: #dadcc6;
- }
-
-@media (max-width: 1200px) {
-    .SearchTile {
-        width: 50%;
-    }
-}
-
-.WeatherTilesContainer {
-    width: 500px;
-}
-
-
-.Localization {
-    font-size: larger;
-    font-weight: bolder;
-}
-
-.DateMessage {
-    font-size: small;
-}
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #8b949e;
+  }
+  
+  .WeatherTilesContainer {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .TodaysWeatherTile {
+    padding: 20px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #1e1e1e;
+  }
+  
+  .TodaysWeatherTile h1 {
+    font-size: 24px;
+    margin: 0;
+    text-transform: capitalize;
+  }
+  
+  .DateMessage {
+    font-size: 14px;
+    color: #8b949e;
+    margin-top: 10px;
+  }
+  
+  .weather-tiles-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .weather-tiles-container::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .weather-tiles-container::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 4px;
+  }
+  
+  .weather-tiles-container::-webkit-scrollbar-track {
+    background-color: #2d2d2d;
+  }
+  
+  .WeatherInfo:hover {
+    transform: scale(1.01);
+    transition: transform 0.2s;
+  }
+  
+  .WeatherInfo {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #2d2d2d;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
