@@ -1,11 +1,10 @@
 import CreateChart from "../weather_tile/charts/CreateChart"
+import "./WeatherTile.css"
 
 function WeatherTile(props) {
-    const numberOfForecastHours = (props.forecast.currentHour > 16) ? 24  + props.forecast.currentHour - 15 : 24;
-    console.error(numberOfForecastHours);
     return (
         <div className="WeatherInfo">
-            <p>{props.forecast.date}</p>
+            <h className="Date">{props.forecast.date}</h>
             {props.forecast.day === 0 ? (
                 <>
                     <p>
@@ -36,16 +35,16 @@ function WeatherTile(props) {
 
             {props.forecast.day != 0 ? (
                 <>
-                    <p>
+                    <p className="Daily">
                         Temperatura minimalna: {props.forecast.minTemperature} {props.units.temperature}
                     </p>
-                    <p>
+                    <p className="Daily">
                         Temperatura maksymalna: {props.forecast.maxTemperature} {props.units.temperature}
                     </p>
-                    <p>
+                    <p className="Daily">
                         Średnia prędkość wiatru: {props.forecast.averageWindSpeed} {props.units.windSpeed}
                     </p>
-                    <p>Przeważający kierunek wiatru: {props.forecast.averageWindDirection}</p>
+                    <p className="Daily">Przeważający kierunek wiatru: {props.forecast.averageWindDireciton}</p>
                 </>
             ) : (null)}
         </div>

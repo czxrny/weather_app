@@ -11,10 +11,24 @@
 .WeatherInfo {
     background-color: gray;
     margin: 10px;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.Date {
+    align-self: center;
 }
 
 .Temperature {
     font-size: 64px;
     font-weight: bolder;
     margin: 5px;
+}
+
+.Daily {
+    background-color: #666361;
+    padding-inline: 10px    ;
+    border: none;
+    border-radius: 5px;
 }

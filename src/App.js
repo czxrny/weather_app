@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import SearchButton from "./components/button/SearchButton";
 import "./components/weather_tile/WeatherTile"
 import WeatherTile from "./components/weather_tile/WeatherTile";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 
 function App() {
     const [localization, setLocalization] = useState("");
@@ -14,9 +13,7 @@ function App() {
 
     return (
         <div className={"Main"}>
-            <div className={"LogoContainer"}>
-                <img className={"logo"} src="./image.png" alt="logo"/>
-            </div>
+            <img className={"logo"} src="./image.png" alt="logo"/>
 
             <div className={"AppBody"}>     
                 <div className="SearchTile">
@@ -36,9 +33,9 @@ function App() {
                 </div>
                 <div className={"WeatherTilesContainer"}>
                     <div className={"TodaysWeatherTile"}>
-                        <p className={"Localization"}>{currentLocalization}</p>
+                        <h>{currentLocalization}</h>
                         <p className={"DateMessage"}>{dateMessage}</p>
-                        <div className={"WeatherInfo"}>
+                        <div className={"test"}>
                             {nextWeekForecast ? (
                                 <div className="weather-tiles-container">
                                     {nextWeekForecast.map((forecast, i) => (

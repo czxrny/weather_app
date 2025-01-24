@@ -1,13 +1,10 @@
 .Main {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    padding: 50px;
 }
 
-.Main > * {
-    margin: 30px;
-    border: none;
-    border-radius: 5px;
+h {
+    font-size: 35px;
+    font-weight: bolder;
 }
 
 .Logo {
