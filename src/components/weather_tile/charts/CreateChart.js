@@ -27,6 +27,12 @@ function CreateChart(props) {
             >
             <Tooltip
                 formatter={(value) => `${value.toFixed(1)} ${props.units}`}
+                contentStyle={{
+                    width: '120px',
+                    height: 'auto',
+                    fontSize: '10px',
+                    padding: '5px',
+                }}
             />
             <XAxis dataKey="name" stroke={"#948c82"}/>
             <Tooltip />

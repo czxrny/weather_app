@@ -2,64 +2,76 @@ export class ForecastCreator {
     // tworzy liste obiektow z informacjami o 7 dniach pogody
     constructor(info) {
         this.info = info;
-        this.units = {  temperature: info.hourly_units.temperature_2m,
-                        windSpeed: info.hourly_units.wind_speed_10m,
-                        humidity: info.hourly_units.relative_humidity_2m};
+        this.units = {  
+            temperature: info.hourly_units.temperature_2m,
+            windSpeed: info.hourly_units.wind_speed_10m,
+            humidity: info.hourly_units.relative_humidity_2m
+        };
         this.windSpeedUnits = info.hourly_units.wind_speed_10m;
         this.forecast = [];
 
-        this.forecast.push(this.getDayForecast(0, Number(this.info.localTime.substring(0,2))));
+        this.forecast.push(this.getDayForecast(0, Number(this.info.localTime.substring(0, 2))));
 
         for (let i = 1; i < 7; i++) {
             this.forecast.push(this.getDayForecast(i));
         }
     }
 
-    /**
-     * Tworzy prognozę dla jednego dnia.
-     * @param {number} day - Numer dnia (0 = dzisiaj, 1 = jutro, itd.).
-     * @param {number} hour - Początkowa godzina prognozy (domyślnie 0).
-     * @returns {object} - Obiekt z prognozą dla danego dnia.
-     */
     getDayForecast(day, hour = 0) {
         const dayIndex = day * 24;
         // after 17th hour start to add more hours after midnight to display
-        const numberOfForecastHours = (hour > 17) ? 24  + hour - 17 : 24;
+        const numberOfForecastHours = (hour > 17) ? 24 + hour - 17 : 24;
 
         let timeArr = [];
 
-        for(let i = dayIndex + hour; i < dayIndex + numberOfForecastHours; i++){
+        for (let i = dayIndex + hour; i < dayIndex + numberOfForecastHours; i++) {
             timeArr.push(this.info.hourly.time[i].slice(11, 16));
         }
 
         return {
-                day: dayIndex,
-                currentHour: hour,
-                date: this.info.hourly.time[dayIndex].slice(0, 10),
-                timeArr: timeArr,
-                maxTemperature: this.info.daily.temperature_2m_max[day],
-                minTemperature: this.info.daily.temperature_2m_min[day],
-                hourlyTemperature: this.info.hourly.temperature_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
-                hourlyHumidity: this.info.hourly.relative_humidity_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
-                hourlyWindSpeed: this.info.hourly.wind_speed_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
-                hourlyWindDirection: this.info.hourly.wind_direction_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
-                averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice(dayIndex, dayIndex + numberOfForecastHours)),
-                averageWindDireciton: this.findTheAvgWindDirection(this.info.hourly.wind_direction_10m.slice(dayIndex, dayIndex + numberOfForecastHours))
+            day: dayIndex,
+            currentHour: hour,
+            date: this.info.hourly.time[dayIndex].slice(0, 10),
+            timeArr: timeArr,
+            maxTemperature: this.info.daily.temperature_2m_max[day],
+            minTemperature: this.info.daily.temperature_2m_min[day],
+            hourlyTemperature: this.info.hourly.temperature_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+            hourlyHumidity: this.info.hourly.relative_humidity_2m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+            hourlyWindSpeed: this.info.hourly.wind_speed_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+            hourlyWindDirection: this.info.hourly.wind_direction_10m.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+            hourlyRain: this.info.hourly.rain.slice(dayIndex + hour, dayIndex + numberOfForecastHours),
+            averageWindSpeed: this.findTheAvgForTheDay(this.info.hourly.wind_speed_10m.slice(dayIndex, dayIndex + numberOfForecastHours)),
+            averageWindDireciton: this.findTheAvgWindDirection(this.info.hourly.wind_direction_10m.slice(dayIndex, dayIndex + numberOfForecastHours)),
+            dominantWeatherCondition: this.findTheDominantWeatherCondition(
+                this.info.hourly.rain.slice(dayIndex, dayIndex + numberOfForecastHours),
+                this.info.hourly.snowfall.slice(dayIndex, dayIndex + numberOfForecastHours),
+                this.info.hourly.cloud_cover.slice(dayIndex, dayIndex + numberOfForecastHours)
+            )
         };
     }
 
-    findTheAvgForTheDay(arr) {
+    findTheAvgForTheDay(arr, precision = 1) {
+        if (!Array.isArray(arr)) {
+            console.error("Expected an array but received:", arr);
+            return 0;
+        }
+
         let result = 0;
 
-        for (let val of arr) {
+        for (let val of arr)
             result += val;
-        }
+        
         result /= arr.length;
 
-        return result.toFixed(1);
+        return result.toFixed(precision);
     }
 
     findTheAvgWindDirection(arr) {
+        if (!Array.isArray(arr)) {
+            console.error("Expected an array but received:", arr);
+            return;
+        }
+
         const avg = this.findTheAvgForTheDay(arr);
         const directions = [
             { range: [337.5, 360], direction: "Północ" },
@@ -73,16 +85,47 @@ export class ForecastCreator {
             { range: [292.5, 337.5], direction: "Północny Zachód" }
         ];
 
-        for(const { range, direction } of directions) {
-            if(avg >= range[0] && avg < range[1])
+        for (const { range, direction } of directions) {
+            if (avg >= range[0] && avg < range[1])
                 return direction;
         }
     }
 
-    /**
-     * Zwraca całą prognozę.
-     * @returns {Array} - Tablica z prognozami dla dni.
-     */
+    findTheDominantWeatherCondition(rain, snowfall, cloudCover) {
+        const weatherProps = [rain, snowfall, this.cloudArrToFloat(cloudCover)];
+        const threshold = 0.5;
+        const conditions = { 0: "rainy", 1: "snowy", 2: "partly_cloudy" };
+        let resultValue = -1;
+        let result = "sunny";
+
+        for (let i = 0; i < weatherProps.length; i++) {
+            const tmp = this.findTheAvgForTheDay(weatherProps[i], 2);
+            console.log(tmp, conditions[i])
+            if (tmp >= threshold && tmp > resultValue) {
+                resultValue = tmp;
+                if(conditions[i] == "partly_cloudy" && tmp >= 0.75)
+                    result = "cloudy";
+                else
+                    result = conditions[i];
+            }
+        }
+
+        console.error(result);
+        return result;
+    }
+
+    cloudArrToFloat(arr) {
+        if (!Array.isArray(arr)) {
+            console.error("Expected an array for cloud cover:", arr);
+            return [];
+        }
+
+        for (let i = 0; i < arr.length; i++)
+            arr[i] = arr[i] / 100;
+
+        return arr;
+    }
+
     getForecast() {
         return this.forecast;
     }

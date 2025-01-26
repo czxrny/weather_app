@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import SearchButton from "./components/button/SearchButton";
 import "./components/weather_tile/WeatherTile"
 import WeatherTile from "./components/weather_tile/WeatherTile";
+import logo from "./media/logo.png"
 
 function App() {
     const [localization, setLocalization] = useState("");
@@ -13,7 +14,7 @@ function App() {
 
     return (
     <div className="Main">
-    <img className="logo" src="./image.png" alt="logo" />
+    <img className="logo" src={logo} alt="logo" />
 
     <div className="AppBody">
         <div className="SearchTile">
