@@ -28,7 +28,7 @@ function CreateChart(props) {
             <Tooltip
                 formatter={(value) => `${value.toFixed(1)} ${props.units}`}
             />
-            <XAxis dataKey="name" stroke={"#000000"}/>
+            <XAxis dataKey="name" stroke={"#948c82"}/>
             <Tooltip />
             <Area type="monotone" dataKey={props.type} stroke={colors.stroke} fill={colors.fill} />
             </AreaChart>

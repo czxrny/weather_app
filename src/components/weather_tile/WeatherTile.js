@@ -1,5 +1,10 @@
 import CreateChart from "../weather_tile/charts/CreateChart"
 import "./WeatherTile.css"
+import sunny from "./icons/sunny.svg";
+import cloudy from "./icons/cloudy.svg";
+import rainy from "./icons/rainy.svg";
+import partlyCloudy from "./icons/partly_cloudy.svg";
+import snowy from "./icons/snowy.svg";
 
 function WeatherTile(props) {
     return (
@@ -7,13 +12,14 @@ function WeatherTile(props) {
             <h className="Date">{props.forecast.date}</h>
             {props.forecast.day === 0 ? (
                 <>
-                    <p>
-                        Temperatura rn: {props.forecast.hourlyTemperature[0]} {props.units.temperature}
+                    <p className="Temperature">
+                        {props.forecast.hourlyTemperature[0]} {props.units.temperature}
                     </p>
-                </>
+                    <p>Prognoza na następne godziny:</p>
+                </>  
             ) : (null)}
 
-            <p>Prognoza na następne godziny:</p>
+            
             <div>
                 TEMPERATURA
                 <CreateChart timeArr={props.forecast.timeArr} data={props.forecast.hourlyTemperature}

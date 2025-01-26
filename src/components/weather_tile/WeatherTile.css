@@ -20,7 +20,6 @@
   }
   
   .WeatherInfo p {
-    font-size: 14px;
     margin: 5px 0;
   }
   
@@ -54,5 +53,13 @@
   .FirstDayTile p {
     font-size: 14px;
     color: #8b949e;
+  }
+
+  .Date {
+    font-size: 14px;
+  }
+
+  .Temperature {
+    font-size: xx-large;
   }
   

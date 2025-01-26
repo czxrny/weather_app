@@ -7,7 +7,7 @@ import WeatherTile from "./components/weather_tile/WeatherTile";
 function App() {
     const [localization, setLocalization] = useState("");
     const [currentLocalization, setCurrentLocalization] = useState("");
-    const [dateMessage, setDateMessage] = useState(" ");
+    const [dateMessage, setDateMessage] = useState("");
     const [nextWeekForecast, setNextWeekForecast] = useState(null)
     const [units, setUnits] = useState(null);
 
@@ -32,17 +32,25 @@ function App() {
             />
         </div>
 
-        <div className="TodaysWeatherTile">
+        {(dateMessage) && (
+        <div className="WeatherField">
             <h1>{currentLocalization}</h1>
             <p className="DateMessage">{dateMessage}</p>
+            <div className="WeatherTiles">
             {nextWeekForecast && (
-                <div className="weather-tiles-container">
-                    {nextWeekForecast.map((forecast, i) => (
+                <>
+                <WeatherTile forecast={nextWeekForecast[0]} units={units} />
+                <div className="ScrollingTilesContainer">
+                    {nextWeekForecast.slice(1).map((forecast, i) => (
                         <WeatherTile key={i} forecast={forecast} units={units} />
                     ))}
                 </div>
-            )}
+                </>
+            )
+            }
+            </div>
         </div>
+        )}
     </div>
 </div>
 );
