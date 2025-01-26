@@ -92,16 +92,21 @@ export class ForecastCreator {
     }
 
     findTheDominantWeatherCondition(rain, snowfall, cloudCover) {
-        const weatherProps = [rain, snowfall, this.cloudArrToFloat(cloudCover)];
+        const weatherProps = [this.cloudArrToFloat(cloudCover), snowfall, rain];
         const threshold = 0.5;
-        const conditions = { 0: "rainy", 1: "snowy", 2: "partly_cloudy" };
+        const snowAndRainThreshold = 0.2;
+        const conditions = { 0: "partly_cloudy", 1: "snowy", 2: "rainy" };
         let resultValue = -1;
         let result = "sunny";
 
         for (let i = 0; i < weatherProps.length; i++) {
             const tmp = this.findTheAvgForTheDay(weatherProps[i], 2);
-            console.log(tmp, conditions[i])
-            if (tmp >= threshold && tmp > resultValue) {
+            if(conditions[i] != "partly_cloudy" && tmp >= snowAndRainThreshold) {
+                resultValue = tmp;
+                result = conditions[i];
+            }
+            
+            else if (tmp >= threshold && tmp > resultValue) {
                 resultValue = tmp;
                 if(conditions[i] == "partly_cloudy" && tmp >= 0.75)
                     result = "cloudy";
@@ -109,8 +114,6 @@ export class ForecastCreator {
                     result = conditions[i];
             }
         }
-
-        console.error(result);
         return result;
     }
 
