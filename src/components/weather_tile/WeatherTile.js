@@ -48,15 +48,30 @@ function WeatherTile(props) {
             {props.forecast.day != 0 ? (
                 <>
                     <p className="Daily">
-                        Temperatura minimalna: {props.forecast.minTemperature} {props.units.temperature}
+                        Temperatura minimalna:
+                    </p>
+                    <p>
+                        {props.forecast.minTemperature} {props.units.temperature}
                     </p>
                     <p className="Daily">
-                        Temperatura maksymalna: {props.forecast.maxTemperature} {props.units.temperature}
+                        Temperatura maksymalna:
+                    </p>
+                    <p>
+                        {props.forecast.maxTemperature} {props.units.temperature}
                     </p>
                     <p className="Daily">
-                        Średnia prędkość wiatru: {props.forecast.averageWindSpeed} {props.units.windSpeed}
+                        Średnia prędkość wiatru:
                     </p>
-                    <p className="Daily">Przeważający kierunek wiatru: {props.forecast.averageWindDireciton}</p>
+                    <p>
+                        {props.forecast.averageWindSpeed} {props.units.windSpeed}
+                    </p>
+                    <p className="Daily">
+                        Przeważający kierunek wiatru:
+                    </p>
+                    <p>
+                        {props.forecast.averageWindDireciton}
+                    </p>
+
                 </>
             ) : (null)}
         </div>
