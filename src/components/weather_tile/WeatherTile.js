@@ -7,9 +7,18 @@ import partlyCloudy from "./icons/partly_cloudy.svg";
 import snowy from "./icons/snowy.svg";
 
 function WeatherTile(props) {
+    const weatherIcons = {
+        sunny: sunny,
+        cloudy: cloudy,
+        rainy: rainy,
+        partly_cloudy: partlyCloudy,
+        snowy: snowy
+    };
+    const weatherIcon = weatherIcons[props.forecast.dominantWeatherCondition];
     return (
         <div className="WeatherInfo">
             <h className="Date">{props.forecast.date}</h>
+            <img src={weatherIcon} alt={props.forecast.dominantWeatherCondition} />
             {props.forecast.day === 0 ? (
                 <>
                     <p className="Temperature">
@@ -35,9 +44,6 @@ function WeatherTile(props) {
                 <CreateChart timeArr={props.forecast.timeArr} data={props.forecast.hourlyHumidity}
                              type={"Humidity"} units={'%'}/>
             </div>
-            <p>
-                Tu będzie się znajdować ikona dla pogody, w zależności od temperatury, która zostanie sczytana.
-            </p>
 
             {props.forecast.day != 0 ? (
                 <>
