@@ -19,10 +19,17 @@ function WeatherTile(props) {
 
     const getBackgroundColor = (temperature) => {
         if (temperature <= 0) return "#363645";
-        if (temperature > 0 && temperature <= 15) return "#3d414a";
-        if (temperature > 15 && temperature <= 25) return "#504f4a";
-        if (temperature > 25) return "#504b4a";
+        if (temperature > 0 && temperature <= 5) return "#2f3b4a";
+        if (temperature > 5 && temperature <= 10) return "#34424f";
+        if (temperature > 10 && temperature <= 15) return "#3b4954";
+        if (temperature > 15 && temperature <= 20) return "#4a564f";
+        if (temperature > 20 && temperature <= 25) return "#5c5a4b";
+        if (temperature > 25 && temperature <= 30) return "#6a5a46";
+        if (temperature > 30 && temperature <= 35) return "#7a5b42";
+        if (temperature > 35) return "#8a5c3e";
     };
+    
+    
 
     useEffect(() => {
         const currentTemperature = parseFloat(props.forecast.hourlyTemperature[0]);
