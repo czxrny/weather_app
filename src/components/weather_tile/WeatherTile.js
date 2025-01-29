@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import CreateChart from "../weather_tile/charts/CreateChart"
 import "./WeatherTile.css"
 import sunny from "./icons/sunny.svg";
@@ -15,6 +16,26 @@ function WeatherTile(props) {
         snowy: snowy
     };
     const weatherIcon = weatherIcons[props.forecast.dominantWeatherCondition];
+
+    const getBackgroundColor = (temperature) => {
+        if (temperature <= 0) return "#363645";
+        if (temperature > 0 && temperature <= 15) return "#3d414a";
+        if (temperature > 15 && temperature <= 25) return "#504f4a";
+        if (temperature > 25) return "#504b4a";
+    };
+
+    useEffect(() => {
+        const currentTemperature = parseFloat(props.forecast.hourlyTemperature[0]);
+        const backgroundColor = getBackgroundColor(currentTemperature);
+
+        document.body.style.transition = "background-color 0.5s ease";
+        document.body.style.backgroundColor = backgroundColor;
+
+        return () => {
+            document.body.style.backgroundColor = "";
+        };
+    }, [props.forecast.hourlyTemperature]);
+
     return (
         <div className="WeatherInfo">
             <h className="Date">{props.forecast.date}</h>
